@@ -1,0 +1,16 @@
+{%extends "base.html"%}
+{% load leaflet_tags %}
+{% block content %}
+    <div class="col-12">
+        <form  method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.errors }}
+            {{ form.as_p }}
+            {{profil_form.management_form}}
+            {{profil_form.forms.0}}
+            {{profil_form.errors}}
+            <input type="submit" value="Envoyer"/>
+            </form>
+            
+        </div>
+      {% endblock %}

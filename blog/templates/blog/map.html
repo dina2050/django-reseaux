@@ -1,0 +1,20 @@
+{%extends "base.html"%}
+{% load leaflet_tags %}
+{% block content %}
+<style media="screen">
+#yourmap {width:50%; height: 100%;}
+</style>
+
+
+<script type="text/javascript">
+    function map_init_basic (map, options) {
+        {% for profil in object_list %}
+
+        L.marker([{{profil.geom.1}}, {{profil.geom.0}}]).bindPopup("{{profil.user.username}}").addTo(map);
+    
+        {% endfor %}
+    }
+</script>
+
+{% leaflet_map "yourmap" callback="window.map_init_basic" %}
+{% endblock %}

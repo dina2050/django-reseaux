@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container p-5">    
+    <div class="card mb-3 m-auto" style="width: 18rem;">
+        <div class="card-body">
+            <form method="post">{% csrf_token %}
+                {{ form.as_p }}
+                {{ profil_form.forms.0.as_p }}
+                <p>Are you sure you want to delete "{{ user.username }}"?</p>
+                <input class="btn btn-outline-success p-2 border-0" type="submit" value="Confirm">
+                <a href="{% url 'profile_detail' user.username %}"
+                    class="btn btn-outline-danger p-2 border-0">Cancel</a>
+            </form>
+        </div>
+    </div></div>{% endblock %}

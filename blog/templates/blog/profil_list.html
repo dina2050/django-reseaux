@@ -1,0 +1,57 @@
+{%extends "base.html"%}
+{% block content %}
+<div class="col-12 text-center">
+    <!-- <form class="form-inline mb-5 mt-2 " action="{%url 'profile_list'%}" method="GET" >
+        <input class="form-control mr-sm-2  w-75" type="search" placeholder="Search" aria-label="Search" name="q">
+        <button class="btn btn-outline-success" type="submit">Search</button>
+      </form> -->
+      <form action="{%url 'profile_list'%}" method="POST">
+        {% csrf_token %}
+        {{search_form.as_p}}
+        <button class="btn btn-outline-success" type="submit">Search</button>
+      </form>
+        {%for profil in object_list%}
+        <a href="{% url 'profile_detail' profil.user.username %}">
+        <div class="card">
+            <div class="card-body text-center">
+              <h5 class="card-title">{{ profil.user.first_name }} {{ profil.user.last_name }}</h5> 
+              <h6 class="card-subtitle mb-2 text-muted">{{ profil.city }}</h6>
+              {% for tag in profil.interest.all %}
+              <li>{{tag}}</li>
+              {% endfor %}
+              {% if profil in request.user.profil.follows.all %}
+              <a href="{%url 'unfollow' request.user.username profil.user.username%}">Unfollow</a>
+              {% else %}
+              <a href="{%url 'follow' request.user.username profil.user.username%}">Follow</a>
+              {% endif %}
+            </div>
+          </div>
+        </a>
+        <!-- <li>{{ profil.user }}</li> -->
+        {%endfor%}
+</div>
+<div class="col-12 mt-5">
+    <nav aria-label="profile listing pages">
+        <ul class="pagination justify-content-center">
+          <li class="page-item">
+            <a class="page-link" href="#" aria-label="Previous">
+              <span aria-hidden="true">&laquo;</span>
+              <span class="sr-only">Previous</span>
+            </a>
+          </li>
+          <li class="page-item"><a class="page-link" href="#">1</a></li>
+          <li class="page-item"><a class="page-link" href="#">2</a></li>
+          <li class="page-item"><a class="page-link" href="#">3</a></li>
+          <li class="page-item">
+            <a class="page-link" href="#" aria-label="Next">
+              <span aria-hidden="true">&raquo;</span>
+              <span class="sr-only">Next</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    
+    
+    
+</div>
+{% endblock %}
